@@ -32,7 +32,7 @@ class DataTransformation:
                 "race_ethnicity",
                 "parental_level_of_education",
                 "lunch",
-                "test_preparation_course"
+                "test_preparation_course",
             ]
 
             num_pipeline = Pipeline(
@@ -45,13 +45,13 @@ class DataTransformation:
             cat_pipeline = Pipeline(
                 steps=[
                     ("imputer", SimpleImputer(strategy="most_frequent")),
-                    ("one_hot_encoder", OneHotEncoder()),
+                    ("one_hot_encoder", OneHotEncoder(handle_unknown="ignore")),
                     ("scaler", StandardScaler(with_mean=False))
                 ]
             )
 
-            logging.info("Scaling numerical column complete")
-            logging.info("Categorical column encoding complete")
+            logging.info(f"Categorical columns: {categorical_features}")
+            logging.info(f"Numerical columns: {numerical_features}")
 
             preprocessor = ColumnTransformer(
                 [
